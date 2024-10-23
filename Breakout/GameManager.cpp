@@ -13,6 +13,12 @@ GameManager::GameManager(sf::RenderWindow* window)
     _masterText.setPosition(50, 400);
     _masterText.setCharacterSize(48);
     _masterText.setFillColor(sf::Color::Yellow);
+
+
+    //create a new view based on the default window view
+    view = _window->getDefaultView();
+    centre = view.getCenter();
+    _window->setView(view);
 }
 
 void GameManager::initialize()
@@ -70,6 +76,10 @@ void GameManager::update(float dt)
     // timer.
     _time += dt;
 
+    //tick down screen shake timer if it's active
+    if (shakeTimer > 0) {
+        shakeTimer -= dt;
+    }
 
     if (_time > _timeLastPowerupSpawned + POWERUP_FREQUENCY && rand()%700 == 0)      // TODO parameterise
     {
@@ -95,11 +105,31 @@ void GameManager::loseLife()
     _lives--;
     _ui->lifeLost(_lives);
 
-    // TODO screen shake.
+    //Set screen shake timer to 0.1 seconds
+    shakeTimer = 0.1;
+
 }
 
 void GameManager::render()
 {
+
+    //if the screen shake timer is active and the games still running
+    if (shakeTimer > 0 && _lives > 0) {
+        
+        //randomly determine an offset from screen centre using a newly defined constant
+        sf::Vector2f offset = sf::Vector2f(rand() % SCREEN_SHAKE_AMOUNT -(SCREEN_SHAKE_AMOUNT * 0.5f), rand() % SCREEN_SHAKE_AMOUNT - (SCREEN_SHAKE_AMOUNT *0.5f));
+
+        //set the new centre to this offset
+        view.setCenter(centre + offset);
+        _window->setView(view);
+    }
+    else if (view.getCenter() != centre) {
+
+        //else, set view back to default
+        view.setCenter(centre);
+        _window->setView(view);
+    }
+
     _paddle->render();
     _ball->render();
     _brickManager->render();
