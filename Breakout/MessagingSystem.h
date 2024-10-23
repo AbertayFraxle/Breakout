@@ -20,6 +20,10 @@ private:
 
 	sf::Text _message;
 	sf::Font _font;
+
+	sf::RectangleShape activeBar;
+	sf::RectangleShape backgroundBar;
+
 	float _messageTimer = 0.f;
 	float _timeToDisplay = 0.f;
 };

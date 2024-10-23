@@ -33,3 +33,7 @@ fire ball (green)
 
 # Time Details and Changelist
 <Add information to this section about the time you've taken for this task along with a professional changelist.>
+
+1m 37s Identified circular inclusion in PowerupBase.h and PowerupFireBall.h and fixed it
+
+1h 10m Implemented a progress bar to replace the timer when a powerup is active.

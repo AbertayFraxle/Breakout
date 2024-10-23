@@ -18,10 +18,19 @@ UI::UI(sf::RenderWindow* window, int lives, GameManager* gameManager)
 		_lives.push_back(newLife);
 	}
 	_powerupText.setCharacterSize(30);
-	_powerupText.setPosition(800, 10);
-	_powerupText.setFillColor(sf::Color::Cyan);
+	_powerupText.setPosition(840, 10);
+	_powerupText.setFillColor(sf::Color::White);
 	_font.loadFromFile("font/montS.ttf");
 	_powerupText.setFont(_font);
+
+	//add outline to text to make it readable against any background
+	_powerupText.setOutlineColor(sf::Color::Black);
+	_powerupText.setOutlineThickness(2);
+
+	//add the bar to represent time the powerup has left
+	_powerupBar.setSize(sf::Vector2f(160, 40));
+	_powerupBar.setFillColor(sf::Color::Transparent);
+	_powerupBar.setPosition(800, 10);
 }
 
 UI::~UI()
@@ -33,32 +42,35 @@ void UI::updatePowerupText(std::pair<POWERUPS, float> powerup)
 {
 	std::ostringstream oss;
 
+	//scale down the powerup timer indicator bar dependent on it's size
+	_powerupBar.setSize(sf::Vector2f(std::lerp(0,160,powerup.second/POWERUP_TIME), 40));
+
 	switch (powerup.first)
 	{
 	case bigPaddle:
 		oss << std::fixed << std::setprecision(2) << powerup.second;
-		_powerupText.setString("big " + oss.str());
-		_powerupText.setFillColor(paddleEffectsColour);
+		_powerupText.setString("big ");
+		_powerupBar.setFillColor(paddleEffectsColour);
 		break;
 	case smallPaddle:
 		oss << std::fixed << std::setprecision(2) << powerup.second;
-		_powerupText.setString("small " + oss.str());
-		_powerupText.setFillColor(paddleEffectsColour);
+		_powerupText.setString("small ");
+		_powerupBar.setFillColor(paddleEffectsColour);
 		break;
 	case slowBall:
 		oss << std::fixed << std::setprecision(2) << powerup.second;
-		_powerupText.setString("slow " + oss.str());
-		_powerupText.setFillColor(ballEffectsColour);
+		_powerupText.setString("slow ");
+		_powerupBar.setFillColor(ballEffectsColour);
 		break;
 	case fastBall:
 		oss << std::fixed << std::setprecision(2) << powerup.second;
-		_powerupText.setString("fast " + oss.str());
-		_powerupText.setFillColor(ballEffectsColour);
+		_powerupText.setString("fast ");
+		_powerupBar.setFillColor(ballEffectsColour);
 		break;
 	case fireBall:
 		oss << std::fixed << std::setprecision(2) << powerup.second;
-		_powerupText.setString("fire " + oss.str());
-		_powerupText.setFillColor(extraBallEffectsColour);
+		_powerupText.setString("fire ");
+		_powerupBar.setFillColor(extraBallEffectsColour);
 		break;
 	case none:
 		_powerupText.setString("");
@@ -74,6 +86,7 @@ void UI::lifeLost(int lives)
 
 void UI::render()
 {
+	_window->draw(_powerupBar);
 	_window->draw(_powerupText);
 	for (sf::CircleShape life : _lives)
 	{

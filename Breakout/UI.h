@@ -4,6 +4,7 @@
 
 #include "CONSTANTS.h"
 #include "PowerupManager.h"
+#include "math.h"
 
 class GameManager;
 
@@ -23,6 +24,7 @@ private:
 	sf::RenderWindow* _window;
 	sf::Font _font;
 	sf::Text _powerupText;
+	sf::RectangleShape _powerupBar;
 
 	std::vector<sf::CircleShape> _lives;
 

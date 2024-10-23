@@ -8,6 +8,9 @@ MessagingSystem::MessagingSystem(sf::RenderWindow* window)
 	_message.setFont(_font);
 	_message.setFillColor(sf::Color::White);
 	_message.setPosition(10, 10);
+
+	backgroundBar.setFillColor(sf::Color::Black);
+	//activeBar
 		
 }
 
@@ -36,6 +39,9 @@ void MessagingSystem::update(float dt)
 void MessagingSystem::render()
 {
 	_window->draw(_message);
+
+	_window->draw(backgroundBar);
+	_window->draw(activeBar);
 }
 
 // update alert with str <message> for float <timeToDisplay> in seconds.
