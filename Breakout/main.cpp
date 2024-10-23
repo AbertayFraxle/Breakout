@@ -9,6 +9,8 @@ int main()
     GameManager gameManager(&window);
     gameManager.initialize();
 
+    srand(time(NULL));
+
     sf::Clock clock;
     float deltaTime;
 

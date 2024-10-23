@@ -33,6 +33,29 @@ void Paddle::moveRight(float dt)
     }
 }
 
+void Paddle::moveMouse(float dt)
+{
+    //get mouse position in relation to the window
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*_window);
+
+    //get the middle of the paddle's x position
+    float position = _sprite.getPosition().x + _sprite.getSize().x / 2;
+
+    //if the distance between mouse x position and paddle is greater than one
+    if (abs(mousePos.x  - position) > 1) {
+
+        //get direction to move paddle
+        int dir = 1;
+        if (mousePos.x - position < 0) {
+            dir = -1;
+        }
+
+        //move paddle towards mouse x position
+        _sprite.move(sf::Vector2f(dt * PADDLE_SPEED * dir, 0));
+    }
+
+}
+
 void Paddle::update(float dt)
 {
     if (_timeInNewSize > 0)
