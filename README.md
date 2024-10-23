@@ -36,4 +36,10 @@ fire ball (green)
 
 1m 37s Identified circular inclusion in PowerupBase.h and PowerupFireBall.h and fixed it
 
-1h 10m Implemented a progress bar to replace the timer when a powerup is active.
+1h 10m Implemented a progress bar to replace the timer when a powerup is active
+
+2h 21m Implemented mouse controls instead of keyboard controls, paddle moves to mouse position at same rate as it moved with keyboard
+
+2h 35m Changed paddle speed from a constant to being editable, with default being constant. Then changed bigPaddle and smallPaddle powerups to effect the movement speed of the paddle
+
+3h 10m Implemented violent screen shake whenever the player loses a life, apart from the last time so screen isnt infinitely shaking

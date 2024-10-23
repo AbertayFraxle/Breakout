@@ -7,6 +7,8 @@ Paddle::Paddle(sf::RenderWindow* window)
     _sprite.setFillColor(sf::Color::Cyan);
     _sprite.setPosition((window->getSize().x - _width) / 2.0f, window->getSize().y - 50.0f);
     _sprite.setSize(sf::Vector2f(_width, PADDLE_HEIGHT));
+
+    currSpeed = PADDLE_SPEED;
 }
 
 Paddle::~Paddle()
@@ -19,7 +21,7 @@ void Paddle::moveLeft(float dt)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && position > 0)
     {
-        _sprite.move(sf::Vector2f(-dt * PADDLE_SPEED, 0));
+        _sprite.move(sf::Vector2f(-dt * currSpeed, 0));
     }
 }
 
@@ -29,7 +31,7 @@ void Paddle::moveRight(float dt)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && position < _window->getSize().x - _width)
     {
-        _sprite.move(sf::Vector2f(dt * PADDLE_SPEED, 0));
+        _sprite.move(sf::Vector2f(dt * currSpeed, 0));
     }
 }
 
@@ -51,9 +53,8 @@ void Paddle::moveMouse(float dt)
         }
 
         //move paddle towards mouse x position
-        _sprite.move(sf::Vector2f(dt * PADDLE_SPEED * dir, 0));
+        _sprite.move(sf::Vector2f(dt * currSpeed * dir, 0));
     }
-
 }
 
 void Paddle::update(float dt)
@@ -64,6 +65,7 @@ void Paddle::update(float dt)
     }
     else
     {
+        currSpeed = PADDLE_SPEED;
         setWidth(1.0f, 0.0f); // Reset to default width after duration
     }
 }
@@ -87,4 +89,9 @@ void Paddle::setWidth(float coeff, float duration)
     _timeInNewSize = duration;
     float newX = _sprite.getPosition().x + (_width - PADDLE_WIDTH) / 2;
     _sprite.setPosition(newX, _sprite.getPosition().y);
+}
+
+void Paddle::setCurrSpeed(float newSpeed)
+{
+    currSpeed = newSpeed;
 }

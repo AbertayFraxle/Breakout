@@ -16,6 +16,7 @@ public:
     void render();
     sf::FloatRect getBounds() const;
     void setWidth(float coeff, float duration);
+    void setCurrSpeed(float newSpeed);
 
 private:
 
@@ -25,4 +26,6 @@ private:
     float _width = PADDLE_WIDTH;
     bool _isAlive;
     float _timeInNewSize = 0.0f;
+
+    float currSpeed;
 };

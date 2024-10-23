@@ -13,5 +13,6 @@ PowerupSmallPaddle::~PowerupSmallPaddle()
 std::pair<POWERUPS, float> PowerupSmallPaddle::applyEffect()
 {
     _paddle->setWidth(0.67f, 5.0f);
-    return { smallPaddle, 5.0f };
+    _paddle->setCurrSpeed(PADDLE_SPEED * 2);
+    return { smallPaddle, POWERUP_TIME };
 }
